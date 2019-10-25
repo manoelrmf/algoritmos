@@ -3,16 +3,31 @@
 #include <stdio.h>
 
 /* Grupo
-* Nome: Manoel Ribeiro 
-* Matricula: 2019101035
+* Nome: Manoel Ribeiro , Raiza Albuquerque, Eduardo Mello
+* Matricula: 2019101035, 2017101805, 2019100620
 */
 
 using namespace std;
 
+ #define tamanhoVet 5
+
+
+bool pesquisaBinaria(int valorAserProcurado, int tamVetor, int vetor[]) {
+   int esquerda, meio, direita;
+   esquerda = 0; direita = tamVetor - 1;
+   while (esquerda <= direita) { 
+      meio = (esquerda + direita)/2; 
+      if (vetor[meio] == valorAserProcurado) return true;
+      if (vetor[meio] < valorAserProcurado) esquerda = meio + 1;
+      else direita = meio - 1;
+   }
+   return false;
+}
+
+
 int main() {
    
    int valor, vetor[100], i, contador, aux;
-   #define tamanhoVet 5
    bool achou;
 
    for(int i = 0; i < tamanhoVet; i++){
@@ -25,32 +40,21 @@ int main() {
 	       aux = vetor[i];
 	       vetor[i] = vetor[i + 1];
 	       vetor[i + 1] = aux;
-	     }
-	   }
-	 }
+	    }
+	  }
+	}
 	 
 	for (int j = 0; j < tamanhoVet; j++) {
 	 cout<<vetor[j]<<"  ";
 	}
-	printf("\n");
+	cout<<endl;
    
-   cout<<"Digite o valor: "; cin>>valor;
+    cout<<"Digite o valor de pesquisa: "; cin>>valor;
 
-   i = 0;
-   achou = false;
-
-   while(i <= tamanhoVet && !achou){
-      if(vetor[i] == valor){
-        achou = true;
-      }else{
-          i++;
-      }
-   }
-
-   if(achou){
-      cout<<"Ok! valor encontrado"<<endl;
-   }else{
-       cout<<"Valor nao encontrado"<<endl;
-   }
+    if(pesquisaBinaria(valor, tamanhoVet, vetor)){
+       cout<<"Ok! valor encontrado"<<endl;
+    }else{
+        cout<<"Valor nao encontrado"<<endl;
+    }
     return 0;
 }
