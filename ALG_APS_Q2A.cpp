@@ -3,8 +3,8 @@
 #include <stdio.h>
 
 /* Grupo
-* Nome: Manoel Ribeiro 
-* Matricula: 2019101035
+* Nome: Manoel Ribeiro , Raiza Albuquerque, Eduardo Mello
+* Matricula: 2019101035, 2017101805, 2019100620
 */
 
 using namespace std;
