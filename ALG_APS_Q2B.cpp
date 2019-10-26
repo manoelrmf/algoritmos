@@ -11,7 +11,6 @@ using namespace std;
 
  #define tamanhoVet 5
 
-
 bool pesquisaBinaria(int valorAserProcurado, int tamVetor, int vetor[]) {
    int esquerda, meio, direita;
    esquerda = 0; direita = tamVetor - 1;
@@ -23,7 +22,6 @@ bool pesquisaBinaria(int valorAserProcurado, int tamVetor, int vetor[]) {
    }
    return false;
 }
-
 
 int main() {
    
