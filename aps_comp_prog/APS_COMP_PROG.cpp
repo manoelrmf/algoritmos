@@ -7,7 +7,7 @@ using namespace std;
 
 char nome[50][50], sexo[15][50], nome_arq[50], nome_arq_carregado[50];
 int idade[50], matricula[50], contadorAlunos = 0;
-float nota1[50], nota2[50], nota3[50], media[50];
+float notas[4][50];
 
 FILE *arq;
 
@@ -16,21 +16,28 @@ void exibeAlunoPorIndice(int i){
 	cout<<"Nome: "<<nome[i]<<endl;
 	cout<<"Idade: "<<idade[i]<<endl;
 	cout<<"Sexo: "<<sexo[i]<<endl;
-	cout<<"AV1: "<<nota1[i]<<endl;
-	cout<<"AV2: "<<nota2[i]<<endl;
-	cout<<"AV3: "<<nota3[i]<<endl;
-	cout<<"Media: "<<media[i]<<endl;
+	cout<<"AV1: "<<notas[0][i]<<endl;
+	cout<<"AV2: "<<notas[1][i]<<endl;
+	cout<<"AV3: "<<notas[2][i]<<endl;
+	cout<<"Meida: "<<notas[3][i]<<endl;
 }
 
 int calcMediaUni(int a, int b, int c){
-	return (a + b + c)/3; 
+	if(a < b && a < c){
+		return (b + c)/2;
+	} else if(b < a && b < c){
+		return (a + c)/2;
+	} else{
+		return (a + b)/2;
+	}
+							
 }
 
 void retornaAlunosPorFaixaDeNotaMaior(int nota){
 	bool encontrado = false; 
 	system("cls");
 	for(int i = 0; i < contadorAlunos; i++){
-		if(media[i] > nota){
+		if(notas[3][i] > nota){
 			encontrado = true;
 			cout<<"----------------------------"<<endl;
 			exibeAlunoPorIndice(i);
@@ -45,7 +52,7 @@ void retornaAlunosPorFaixaDeNotaMenor(int nota){
 	bool encontrado = false; 
 	system("cls");
 	for(int i = 0; i < contadorAlunos; i++){
-		if(media[i] < nota){
+		if(notas[3][i] < nota){
 			encontrado = true;
 			cout<<"----------------------------"<<endl;
 			exibeAlunoPorIndice(i);
@@ -81,12 +88,12 @@ void addAluno(){
 			cout<<"Nome: "; cin>>nome[contadorAlunos];
 			cout<<"Idade: "; cin>>idade[contadorAlunos];
 			cout<<"Sexo (M/F): "; cin>>sexo[contadorAlunos];
-			cout<<"Nota 1: "; cin>>nota1[contadorAlunos];
-			cout<<"Nota 2: "; cin>>nota2[contadorAlunos];
-			cout<<"Nota 3: "; cin>>nota3[contadorAlunos];
-			media[contadorAlunos] = calcMediaUni(nota1[contadorAlunos], 
-												 nota2[contadorAlunos], 
-												 nota3[contadorAlunos]);
+			cout<<"AV1: "; cin>>notas[0][contadorAlunos];
+			cout<<"AV2: "; cin>>notas[1][contadorAlunos];
+			cout<<"AV3: "; cin>>notas[2][contadorAlunos];
+			notas[3][contadorAlunos] = calcMediaUni(notas[0][contadorAlunos],
+													notas[1][contadorAlunos],
+													notas[2][contadorAlunos]);
 			contadorAlunos++;
 		}
 	}else{
@@ -101,10 +108,10 @@ void persisteAlunosNoArquivoExterno(){
 		fprintf(arq,"Nome = %s\n", nome[i]);
 		fprintf(arq,"Idade = %d\n", idade[i]);
 		fprintf(arq,"Sexo = %s\n", sexo[i]);
-		fprintf(arq,"AV1 = %0.1f\n", nota1[i]);
-		fprintf(arq,"AV2 = %0.1f\n", nota2[i]);
-		fprintf(arq,"AV3 = %0.1f\n", nota3[i]);
-		fprintf(arq,"Media = %0.1f\n", media[i]);
+		fprintf(arq,"AV1 = %0.1f\n", notas[0][i]);
+		fprintf(arq,"AV2 = %0.1f\n", notas[1][i]);
+		fprintf(arq,"AV3 = %0.1f\n", notas[2][i]);
+		fprintf(arq,"Media = %0.1f\n", notas[3][i]);
 		fprintf(arq,"-------\n");
 
 		if(i+1 == contadorAlunos){
@@ -129,7 +136,6 @@ void salvarAlunos(){
 	}else{
 		cout<<"NENHUM ALUNO ENCONTRADO."<<endl;
 	}
-
 	system("pause");
 }
 
@@ -210,9 +216,13 @@ void pesquisarAluno(){
 	if(i != 51){
 		exibeAlunoPorIndice(i);
 	}else{
+		system("cls");
+		int decisao;
 		cout<<"ALUNO NAO ENCONTRADO."<<endl;
+		cout<<"DESEJA ADICIONA-LO? (1-SIM/2-NAO): "; cin>>decisao;
+		if(decisao == 1)
+			addAluno();	
 	}
-	system("pause");
 }
 
 void carregarAlunosArqExterno(){
@@ -238,13 +248,13 @@ void carregarAlunosArqExterno(){
 			fseek(arq, 7,1);
 			fscanf(arq,"%s \n", sexo[i]);
 			fseek(arq, 6,1);
-			fscanf(arq,"%f \n", &nota1[i]);
+			fscanf(arq,"%f \n", &notas[0][i]);
 			fseek(arq, 6,1);
-			fscanf(arq,"%f \n", &nota2[i]);
+			fscanf(arq,"%f \n", &notas[1][i]);
 			fseek(arq, 6,1);
-			fscanf(arq,"%f \n", &nota3[i]);
+			fscanf(arq,"%f \n", &notas[2][i]);
 			fseek(arq, 8,1);
-			fscanf(arq,"%f \n", &media[i]);
+			fscanf(arq,"%f \n", &notas[3][i]);
 			fseek(arq, 8,1);
 			contadorAlunos++;
 		}
