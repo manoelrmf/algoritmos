@@ -5,3 +5,5 @@ aps_comp_prog/APS_COMP_PROG.exe
 
 *.exe
 estrutura_de_dados/ListaLinear
+estrutura_de_dados/aps/Aps
+.vscode/settings.json
