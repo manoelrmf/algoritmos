@@ -307,7 +307,7 @@ void inserirNaPilha()
         scanf("%i", &numero);
         if (numero == 1)
         {
-            excluirElemntoDaLista(&lista);
+            excluirElemntoDaPilha(&pilha);
         }
         else
         {
