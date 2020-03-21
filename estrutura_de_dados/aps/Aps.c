@@ -229,6 +229,9 @@ void fila()
 }
 
 // Funções referentes ao tipo de estrutura pilha
+void operacoesPilha();
+
+
 
 void inicializaPilha(PILHA *pilha) {
    pilha->topo = 0;
@@ -248,8 +251,24 @@ void inserirPilha(PILHA *pilha, REGISTRO reg){
     pilha->A[pilha->topo++] = reg;
 }
 
-void removePilha(PILHA *pilha){
-    pilha->A[--pilha->topo];
+void removePilha(PILHA *pilhaExcluir){
+    pilhaExcluir->A[--pilhaExcluir->topo];
+}
+
+
+void excluirElemntoDaPilha(PILHA *pilhaAExcluir)
+{
+    if (verificaPilhaVazia(&pilha))
+    {
+        limpaConsole();
+        printf(" A pilha está vazia! \n");
+        operacoesPilha();
+        return;
+    }
+    removePilha(&pilha);
+    limpaConsole();
+    printf("\n Excluido com sucesso! \n");
+    operacoesPilha();
 }
 
 void exibirPilha(PILHA *p) {
@@ -259,7 +278,7 @@ void exibirPilha(PILHA *p) {
 	}
     printf("\"\n");
 }
-void operacoesPilha();
+
 void inserirNaPilha()
 {
     printf(" \n");
@@ -309,7 +328,7 @@ void operacoesPilha()
         inserirNaPilha();
         break;
     case 1:
-        printf("excluir");
+        excluirElemntoDaPilha(&pilha);
         break;
     case 0:
         limpaConsole();
