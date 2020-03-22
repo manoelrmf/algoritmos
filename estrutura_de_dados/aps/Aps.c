@@ -23,15 +23,21 @@ typedef struct
     REGISTRO A[MAX];
 } PILHA;
 
-typedef struct
+
+
+typedef struct 
 {
-    REGISTRO registro;
-    struct NODE *proximo;
-} NODE;
+	int capacidade;
+    REGISTRO *registro;
+	int primeiro;
+	int ultimo;
+	int nItens; 
+} FILA;
 
 
 LISTA lista;
 PILHA pilha;
+FILA fila;
 
 int tamanhoFila;
 
@@ -41,8 +47,6 @@ void limpaConsole()
 }
 
 // Funções referentes ao tipo de estrutura lista
-
-
 
 int buscaSequencial(LISTA *listaAbuscar, CHAVE ch)
 {
@@ -230,24 +234,6 @@ void operacoesLista()
     }
 }
 
-// Funções referentes ao tipo de estrutura fila
-
-void inicializaFIla(NO *fila)
-{
- fila->proximo = NULL;
- tamanhoFila = 0;
-}
-
-bool verificaFilaVazia(NO *fila)
-{
-    return fila->proximo == NULL ? true : false ;
-}
-
-void fila()
-{
-    printf("Fila");
-}
-
 // Funções referentes ao tipo de estrutura pilha
 void operacoesPilha();
 
@@ -371,6 +357,55 @@ int escolheEstrutura()
     return id;
 }
 
+void inicializaFila(FILA *fila) { 
+	fila->capacidade = MAX;
+	fila->registro = (REGISTRO*) malloc (fila->capacidade * sizeof(REGISTRO));
+	fila->primeiro = 0;
+	fila->ultimo = -1;
+	fila->nItens = 0; 
+}
+
+void exibirFila(FILA *f){
+
+	int cont, i;
+
+	for ( cont=0, i= f->primeiro; cont < f->nItens; cont++){
+
+		printf("%.2f\t",f->registro[i++]);
+
+		if (i == f->capacidade)
+			i=0;
+
+	}
+	printf("\n\n");
+
+}
+
+void operacoesFila()
+{
+    exibirFila(&fila);
+    int tipoOperacao = escolhaOperacao();
+    switch (tipoOperacao)
+    {
+    case 2:
+        limpaConsole();
+        printf("inserir na fila");
+        break;
+    case 1:
+        printf("excluir da fila");
+        break;
+    case 0:
+        limpaConsole();
+        main();
+        break;
+    default:
+        limpaConsole();
+        printf(" Valor inválido! \n");
+        operacoesFila();
+        break;
+    }
+}
+
 int main()
 {
     int tipoEstrutura = escolheEstrutura();
@@ -382,8 +417,9 @@ int main()
         operacoesLista();
         break;
     case 2:
-        NODE *fila = (NODE *) malloc(sizeof(NODE));
+        inicializaFila(&fila);
         limpaConsole();
+        operacoesFila();
         break;
     case 1:
         inicializaPilha(&pilha);
