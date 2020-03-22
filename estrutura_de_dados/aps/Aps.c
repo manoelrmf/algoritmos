@@ -28,7 +28,7 @@ typedef struct
 typedef struct 
 {
 	int capacidade;
-    REGISTRO *registro;
+    CHAVE *dados;
 	int primeiro;
 	int ultimo;
 	int nItens; 
@@ -281,6 +281,8 @@ void exibirPilha(PILHA *p) {
     printf("\"\n");
 }
 
+
+
 void inserirNaPilha()
 {
     printf(" \n");
@@ -357,28 +359,111 @@ int escolheEstrutura()
     return id;
 }
 
+
+int verificaFilaVazia(FILA *f ) { // retorna verdadeiro se a fila estÃ¡ vazia
+	return (f->nItens==0);
+}
+
+int verificaFIlaCheia(FILA *f ) { // retorna verdadeiro se a fila estÃ¡ cheia
+	return (f->nItens == f->capacidade);
+}
+
+void inserirFila(FILA *f, CHAVE valor) {
+
+	if(f->ultimo == f->capacidade-1)
+		f->ultimo = -1;
+
+	f->ultimo++;
+	f->dados[f->ultimo] = valor;
+	f->nItens++;
+
+}
+
+int removeDaFila(FILA *f ) { // pega o item do comeÃ§o da fila
+
+	int temp = f->dados[f->primeiro++]; // pega o valor e incrementa o primeiro
+
+	if(f->primeiro == f->capacidade)
+		f->primeiro = 0;
+
+	f->nItens--;  // um item retirado
+	return temp;
+
+}
+
+void operacoesFila();
+void excluirElemntoDaFila(FILA *filaAExcluir)
+{
+    if (verificaFilaVazia(&fila))
+    {
+        limpaConsole();
+        printf(" A fila está vazia! \n");
+        operacoesFila();
+        return;
+    }
+    removeDaFila(&fila);
+    limpaConsole();
+    printf("\n Excluido com sucesso! \n");
+    operacoesFila();
+}
+
 void inicializaFila(FILA *fila) { 
 	fila->capacidade = MAX;
-	fila->registro = (REGISTRO*) malloc (fila->capacidade * sizeof(REGISTRO));
+	fila->dados = (CHAVE*) malloc (fila->capacidade * sizeof(CHAVE));
 	fila->primeiro = 0;
 	fila->ultimo = -1;
 	fila->nItens = 0; 
 }
 
 void exibirFila(FILA *f){
-
+    printf("\n Fila --> \" ");
 	int cont, i;
-
 	for ( cont=0, i= f->primeiro; cont < f->nItens; cont++){
-
-		printf("%.2f\t",f->registro[i++]);
-
+        printf("%i ", f->dados[i++]);
 		if (i == f->capacidade)
 			i=0;
-
 	}
-	printf("\n\n");
+    printf("\"\n");
 
+}
+
+
+void inserirNaFila()
+{
+    printf(" \n");
+    int numero;
+    exibirFila(&fila);
+    printf(" \n");
+    printf(" Digite um número para incluir na fila: ");
+    scanf("%i", &numero);
+    if (!verificaFIlaCheia(&fila))
+    {
+        CHAVE valor;
+        valor = numero;
+        inserirFila(&fila, valor);
+        limpaConsole();
+        operacoesFila();
+    }
+    else
+    {
+        printf(" \n");
+        exibirFila(&fila);
+        printf("\n Fila cheia! \n");
+        printf("\n 1 - Excluir elemento ");
+        printf("\n 0 - Voltar \n");
+        printf(" \n");
+        printf(" O que deseja fazer? ");
+        scanf("%i", &numero);
+        if (numero == 1)
+        {
+            excluirElemntoDaFila(&fila);
+        }
+        else
+        {
+            limpaConsole();
+            operacoesFila();
+        }
+    }
 }
 
 void operacoesFila()
@@ -389,10 +474,10 @@ void operacoesFila()
     {
     case 2:
         limpaConsole();
-        printf("inserir na fila");
+        inserirNaFila();
         break;
     case 1:
-        printf("excluir da fila");
+        excluirElemntoDaFila(&fila);
         break;
     case 0:
         limpaConsole();
