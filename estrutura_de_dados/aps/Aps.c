@@ -23,9 +23,16 @@ typedef struct
     REGISTRO A[MAX];
 } PILHA;
 
+typedef struct
+{
+    CHAVE chave;
+    struct NO *proximo;
+} NO;
+
 LISTA lista;
 PILHA pilha;
 
+int tamanhoFila;
 
 void limpaConsole()
 {
@@ -223,6 +230,18 @@ void operacoesLista()
 }
 
 // Funções referentes ao tipo de estrutura fila
+
+void inicializaFIla(NO *fila)
+{
+ fila->proximo = NULL;
+ tamanhoFila = 0;
+}
+
+bool verificaFilaVazia(NO *fila)
+{
+    return fila->proximo == NULL ? true : false ;
+}
+
 void fila()
 {
     printf("Fila");
@@ -231,12 +250,9 @@ void fila()
 // Funções referentes ao tipo de estrutura pilha
 void operacoesPilha();
 
-
-
 void inicializaPilha(PILHA *pilha) {
    pilha->topo = 0;
 }
-
 
 bool verificaPilhaVazia(PILHA *pilha){
     return pilha->topo == 0 ? true : false;
@@ -254,7 +270,6 @@ void inserirPilha(PILHA *pilha, REGISTRO reg){
 void removePilha(PILHA *pilhaExcluir){
     pilhaExcluir->A[--pilhaExcluir->topo];
 }
-
 
 void excluirElemntoDaPilha(PILHA *pilhaAExcluir)
 {
