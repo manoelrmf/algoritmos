@@ -25,9 +25,10 @@ typedef struct
 
 typedef struct
 {
-    CHAVE chave;
-    struct NO *proximo;
-} NO;
+    REGISTRO registro;
+    struct NODE *proximo;
+} NODE;
+
 
 LISTA lista;
 PILHA pilha;
@@ -381,8 +382,8 @@ int main()
         operacoesLista();
         break;
     case 2:
+        NODE *fila = (NODE *) malloc(sizeof(NODE));
         limpaConsole();
-        fila();
         break;
     case 1:
         inicializaPilha(&pilha);
