@@ -285,7 +285,8 @@ void excluirElemntoDaPilha(PILHA *pilhaAExcluir)
 void exibirPilha(PILHA *p)
 {
     printf("\n Pilha --> \" ");
-    for (int i = 0; i < p->topo; i++)
+    int i;
+    for (i = 0; i < p->topo; i++)
     {
         printf("%i ", p->A[i].chave);
     }
