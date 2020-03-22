@@ -1,3 +1,9 @@
+/* 
+    Grupo: Manoel Ribeiro (2019101035)
+    GCC: 9.2.1
+
+*/
+
 #include <stdio.h>
 #include <malloc.h>
 #include <stdbool.h>
@@ -48,8 +54,9 @@ int buscaElementoNaLista(LISTA *listaAbuscar, CHAVE ch)
     int i = 0;
     for (i = 0; i < listaAbuscar->numElementos; i++)
     {
-        if (ch == listaAbuscar->A[i].chave)
+        if (ch == listaAbuscar->A[i].chave){
             return i;
+        }
     }
 
     return -1;
@@ -59,8 +66,9 @@ bool excluiElementoDaLista(CHAVE ch, LISTA *listaAexcluir)
 {
     int pos, j;
     pos = buscaElementoNaLista(listaAexcluir, ch);
-    if (pos == -1)
+    if (pos == -1){
         return false;
+    }
     for (j = pos; j < listaAexcluir->numElementos - 1; j++)
     {
         listaAexcluir->A[j] = listaAexcluir->A[j + 1];
@@ -72,8 +80,9 @@ bool excluiElementoDaLista(CHAVE ch, LISTA *listaAexcluir)
 bool inserirElemento(LISTA *l, REGISTRO reg, int i)
 {
     int j;
-    if ((l->numElementos == MAX) || (i < 0) || (i > l->numElementos))
+    if ((l->numElementos == MAX) || (i < 0) || (i > l->numElementos)){
         return false;
+    }
     for (j = l->numElementos; j > i; j--)
     {
         l->A[j] = l->A[j - 1];
@@ -360,10 +369,9 @@ int verificaFIlaCheia(FILA *f)
 
 void inserirFila(FILA *f, CHAVE valor)
 {
-
-    if (f->fim == f->capacidade - 1)
+    if (f->fim == f->capacidade - 1){
         f->fim = -1;
-
+    }
     f->fim++;
     f->dados[f->fim] = valor;
     f->numElementos++;
@@ -374,8 +382,9 @@ int removeDaFila(FILA *f)
 
     int temp = f->dados[f->inicio++]; 
 
-    if (f->inicio == f->capacidade)
+    if (f->inicio == f->capacidade){
         f->inicio = 0;
+    }
 
     f->numElementos--; 
     return temp;
@@ -413,8 +422,9 @@ void exibirFila(FILA *f)
     for (cont = 0, i = f->inicio; cont < f->numElementos; cont++)
     {
         printf("%i ", f->dados[i++]);
-        if (i == f->capacidade)
+        if (i == f->capacidade){
             i = 0;
+        }
     }
     printf("\"\n");
 }
