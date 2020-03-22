@@ -27,9 +27,9 @@ typedef struct
 {
     int capacidade;
     CHAVE *dados;
-    int primeiro;
-    int ultimo;
-    int nItens;
+    int inicio;
+    int fim;
+    int numElementos;
 } FILA;
 
 LISTA lista;
@@ -43,7 +43,7 @@ void limpaConsole()
 
 // Funções referentes ao tipo de estrutura lista
 
-int buscaSequencial(LISTA *listaAbuscar, CHAVE ch)
+int buscaElementoNaLista(LISTA *listaAbuscar, CHAVE ch)
 {
     int i = 0;
     for (i = 0; i < listaAbuscar->numElementos; i++)
@@ -55,10 +55,10 @@ int buscaSequencial(LISTA *listaAbuscar, CHAVE ch)
     return -1;
 }
 
-bool excluirElementoLista(CHAVE ch, LISTA *listaAexcluir)
+bool excluiElementoDaLista(CHAVE ch, LISTA *listaAexcluir)
 {
     int pos, j;
-    pos = buscaSequencial(listaAexcluir, ch);
+    pos = buscaElementoNaLista(listaAexcluir, ch);
     if (pos == -1)
         return false;
     for (j = pos; j < listaAexcluir->numElementos - 1; j++)
@@ -84,7 +84,7 @@ bool inserirElemento(LISTA *l, REGISTRO reg, int i)
     return true;
 }
 
-void exibir(LISTA *l)
+void exibirLista(LISTA *l)
 {
     int i;
     printf("\n Lista --> \" ");
@@ -124,7 +124,7 @@ void excluirElemntoDaLista(LISTA *listaAexcluirElemento)
     int numero;
     printf(" Qual elemento deseja excluir? ");
     scanf("%i", &numero);
-    if (excluirElementoLista(numero, &lista))
+    if (excluiElementoDaLista(numero, &lista))
     {
         limpaConsole();
         printf("\n Excluido com sucesso! \n");
@@ -167,7 +167,7 @@ void inserirNaLista()
 {
     printf(" \n");
     int numero;
-    exibir(&lista);
+    exibirLista(&lista);
     printf(" \n");
     printf(" Digite um número para incluir na lista: ");
     scanf("%i", &numero);
@@ -185,7 +185,7 @@ void inserirNaLista()
     else
     {
         printf(" \n");
-        exibir(&lista);
+        exibirLista(&lista);
         printf("\n Lista cheia! \n");
         printf("\n 1 - Excluir elemento ");
         printf("\n 0 - Voltar \n");
@@ -206,7 +206,7 @@ void inserirNaLista()
 int main();
 void operacoesLista()
 {
-    exibir(&lista);
+    exibirLista(&lista);
     int tipoOperacao = escolhaOperacao();
     switch (tipoOperacao)
     {
@@ -346,49 +346,38 @@ void operacoesPilha()
     }
 }
 
-int escolheEstrutura()
-{
-    int id;
-    printf(" \n");
-    printf(" 3 - Lista \n");
-    printf(" 2 - Fila \n");
-    printf(" 1 - Pilha \n");
-    printf(" 0 - Sair \n");
-    printf("\n Qual estrutura deseja utilizar? ");
-    scanf("%i", &id);
-    return id;
-}
+// funcoes referentes a estrutura fila
 
 int verificaFilaVazia(FILA *f)
-{ // retorna verdadeiro se a fila estÃ¡ vazia
-    return (f->nItens == 0);
+{ 
+    return (f->numElementos == 0);
 }
 
 int verificaFIlaCheia(FILA *f)
-{ // retorna verdadeiro se a fila estÃ¡ cheia
-    return (f->nItens == f->capacidade);
+{ 
+    return (f->numElementos == f->capacidade);
 }
 
 void inserirFila(FILA *f, CHAVE valor)
 {
 
-    if (f->ultimo == f->capacidade - 1)
-        f->ultimo = -1;
+    if (f->fim == f->capacidade - 1)
+        f->fim = -1;
 
-    f->ultimo++;
-    f->dados[f->ultimo] = valor;
-    f->nItens++;
+    f->fim++;
+    f->dados[f->fim] = valor;
+    f->numElementos++;
 }
 
 int removeDaFila(FILA *f)
-{ // pega o item do comeÃ§o da fila
+{ 
 
-    int temp = f->dados[f->primeiro++]; // pega o valor e incrementa o primeiro
+    int temp = f->dados[f->inicio++]; 
 
-    if (f->primeiro == f->capacidade)
-        f->primeiro = 0;
+    if (f->inicio == f->capacidade)
+        f->inicio = 0;
 
-    f->nItens--; // um item retirado
+    f->numElementos--; 
     return temp;
 }
 
@@ -412,16 +401,16 @@ void inicializaFila(FILA *fila)
 {
     fila->capacidade = MAX;
     fila->dados = (CHAVE *)malloc(fila->capacidade * sizeof(CHAVE));
-    fila->primeiro = 0;
-    fila->ultimo = -1;
-    fila->nItens = 0;
+    fila->inicio = 0;
+    fila->fim = -1;
+    fila->numElementos = 0;
 }
 
 void exibirFila(FILA *f)
 {
     printf("\n Fila --> \" ");
     int cont, i;
-    for (cont = 0, i = f->primeiro; cont < f->nItens; cont++)
+    for (cont = 0, i = f->inicio; cont < f->numElementos; cont++)
     {
         printf("%i ", f->dados[i++]);
         if (i == f->capacidade)
@@ -491,6 +480,19 @@ void operacoesFila()
         operacoesFila();
         break;
     }
+}
+
+int escolheEstrutura()
+{
+    int id;
+    printf(" \n");
+    printf(" 3 - Lista \n");
+    printf(" 2 - Fila \n");
+    printf(" 1 - Pilha \n");
+    printf(" 0 - Sair \n");
+    printf("\n Qual estrutura deseja utilizar? ");
+    scanf("%i", &id);
+    return id;
 }
 
 int main()
