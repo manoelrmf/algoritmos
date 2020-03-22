@@ -55,7 +55,7 @@ int buscaSequencial(LISTA *listaAbuscar, CHAVE ch)
     return -1;
 }
 
-bool excluirElemento(CHAVE ch, LISTA *listaAexcluir)
+bool excluirElementoLista(CHAVE ch, LISTA *listaAexcluir)
 {
     int pos, j;
     pos = buscaSequencial(listaAexcluir, ch);
@@ -124,7 +124,7 @@ void excluirElemntoDaLista(LISTA *listaAexcluirElemento)
     int numero;
     printf(" Qual elemento deseja excluir? ");
     scanf("%i", &numero);
-    if (excluirElemento(numero, &lista))
+    if (excluirElementoLista(numero, &lista))
     {
         limpaConsole();
         printf("\n Excluido com sucesso! \n");
