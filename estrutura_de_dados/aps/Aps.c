@@ -23,17 +23,14 @@ typedef struct
     REGISTRO A[MAX];
 } PILHA;
 
-
-
-typedef struct 
+typedef struct
 {
-	int capacidade;
+    int capacidade;
     CHAVE *dados;
-	int primeiro;
-	int ultimo;
-	int nItens; 
+    int primeiro;
+    int ultimo;
+    int nItens;
 } FILA;
-
 
 LISTA lista;
 PILHA pilha;
@@ -99,7 +96,7 @@ void exibir(LISTA *l)
     }
     printf("\"\n");
 }
-void inicializa(LISTA *lista)
+void inicializaLista(LISTA *lista)
 {
     lista->numElementos = 0;
 }
@@ -237,24 +234,29 @@ void operacoesLista()
 // Funções referentes ao tipo de estrutura pilha
 void operacoesPilha();
 
-void inicializaPilha(PILHA *pilha) {
-   pilha->topo = 0;
+void inicializaPilha(PILHA *pilha)
+{
+    pilha->topo = 0;
 }
 
-bool verificaPilhaVazia(PILHA *pilha){
+bool verificaPilhaVazia(PILHA *pilha)
+{
     return pilha->topo == 0 ? true : false;
 }
 
-bool verificaPilhaCheia(PILHA *pilha) {
-	int tamanho = sizeof(pilha->A)/sizeof(int);
-    return pilha->topo < tamanho  ? false : true ; 
+bool verificaPilhaCheia(PILHA *pilha)
+{
+    int tamanho = sizeof(pilha->A) / sizeof(int);
+    return pilha->topo < tamanho ? false : true;
 }
 
-void inserirPilha(PILHA *pilha, REGISTRO reg){
+void inserirPilha(PILHA *pilha, REGISTRO reg)
+{
     pilha->A[pilha->topo++] = reg;
 }
 
-void removePilha(PILHA *pilhaExcluir){
+void removePilha(PILHA *pilhaExcluir)
+{
     pilhaExcluir->A[--pilhaExcluir->topo];
 }
 
@@ -273,15 +275,15 @@ void excluirElemntoDaPilha(PILHA *pilhaAExcluir)
     operacoesPilha();
 }
 
-void exibirPilha(PILHA *p) {
+void exibirPilha(PILHA *p)
+{
     printf("\n Pilha --> \" ");
-	for (int i = 0; i < p->topo; i++) {
+    for (int i = 0; i < p->topo; i++)
+    {
         printf("%i ", p->A[i].chave);
-	}
+    }
     printf("\"\n");
 }
-
-
 
 void inserirNaPilha()
 {
@@ -359,36 +361,37 @@ int escolheEstrutura()
     return id;
 }
 
-
-int verificaFilaVazia(FILA *f ) { // retorna verdadeiro se a fila estÃ¡ vazia
-	return (f->nItens==0);
+int verificaFilaVazia(FILA *f)
+{ // retorna verdadeiro se a fila estÃ¡ vazia
+    return (f->nItens == 0);
 }
 
-int verificaFIlaCheia(FILA *f ) { // retorna verdadeiro se a fila estÃ¡ cheia
-	return (f->nItens == f->capacidade);
+int verificaFIlaCheia(FILA *f)
+{ // retorna verdadeiro se a fila estÃ¡ cheia
+    return (f->nItens == f->capacidade);
 }
 
-void inserirFila(FILA *f, CHAVE valor) {
+void inserirFila(FILA *f, CHAVE valor)
+{
 
-	if(f->ultimo == f->capacidade-1)
-		f->ultimo = -1;
+    if (f->ultimo == f->capacidade - 1)
+        f->ultimo = -1;
 
-	f->ultimo++;
-	f->dados[f->ultimo] = valor;
-	f->nItens++;
-
+    f->ultimo++;
+    f->dados[f->ultimo] = valor;
+    f->nItens++;
 }
 
-int removeDaFila(FILA *f ) { // pega o item do comeÃ§o da fila
+int removeDaFila(FILA *f)
+{ // pega o item do comeÃ§o da fila
 
-	int temp = f->dados[f->primeiro++]; // pega o valor e incrementa o primeiro
+    int temp = f->dados[f->primeiro++]; // pega o valor e incrementa o primeiro
 
-	if(f->primeiro == f->capacidade)
-		f->primeiro = 0;
+    if (f->primeiro == f->capacidade)
+        f->primeiro = 0;
 
-	f->nItens--;  // um item retirado
-	return temp;
-
+    f->nItens--; // um item retirado
+    return temp;
 }
 
 void operacoesFila();
@@ -407,26 +410,27 @@ void excluirElemntoDaFila(FILA *filaAExcluir)
     operacoesFila();
 }
 
-void inicializaFila(FILA *fila) { 
-	fila->capacidade = MAX;
-	fila->dados = (CHAVE*) malloc (fila->capacidade * sizeof(CHAVE));
-	fila->primeiro = 0;
-	fila->ultimo = -1;
-	fila->nItens = 0; 
+void inicializaFila(FILA *fila)
+{
+    fila->capacidade = MAX;
+    fila->dados = (CHAVE *)malloc(fila->capacidade * sizeof(CHAVE));
+    fila->primeiro = 0;
+    fila->ultimo = -1;
+    fila->nItens = 0;
 }
 
-void exibirFila(FILA *f){
+void exibirFila(FILA *f)
+{
     printf("\n Fila --> \" ");
-	int cont, i;
-	for ( cont=0, i= f->primeiro; cont < f->nItens; cont++){
+    int cont, i;
+    for (cont = 0, i = f->primeiro; cont < f->nItens; cont++)
+    {
         printf("%i ", f->dados[i++]);
-		if (i == f->capacidade)
-			i=0;
-	}
+        if (i == f->capacidade)
+            i = 0;
+    }
     printf("\"\n");
-
 }
-
 
 void inserirNaFila()
 {
@@ -497,7 +501,7 @@ int main()
     switch (tipoEstrutura)
     {
     case 3:
-        inicializa(&lista);
+        inicializaLista(&lista);
         limpaConsole();
         operacoesLista();
         break;
