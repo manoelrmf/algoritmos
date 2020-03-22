@@ -36,8 +36,6 @@ LISTA lista;
 PILHA pilha;
 FILA fila;
 
-int tamanhoFila;
-
 void limpaConsole()
 {
     system("clear");
