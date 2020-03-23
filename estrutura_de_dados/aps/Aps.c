@@ -1,7 +1,6 @@
 /* 
     Grupo: Manoel Ribeiro (2019101035)
     GCC: 9.2.1
-
 */
 
 #include <stdio.h>
