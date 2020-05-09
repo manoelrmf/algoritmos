@@ -29,7 +29,7 @@ void push(PILHA *pilha, char reg)
 
 char pop(PILHA *pilha)
 {
-    return pilha[--pilha->topo];
+    return pilha->A[--pilha->topo];
 }
 
 bool verificaPilhaVazia(PILHA *pilha)
