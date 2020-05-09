@@ -7,33 +7,29 @@
 #include <malloc.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#define MAX 10
-
-typedef int CHAVE;
-
-typedef struct
-{
-    CHAVE chave;
-} REGISTRO;
+#define MAX 50
 
 typedef struct
 {
     int topo;
-    REGISTRO A[MAX];
+    char A[MAX];
 } PILHA;
 
 PILHA pilha;
 
-void limpaConsole()
-{
-    system("clear");
-}
-
-// Funções referentes ao tipo de estrutura pilha
-
 void inicializaPilha(PILHA *pilha)
 {
     pilha->topo = 0;
+}
+
+void push(PILHA *pilha, char reg)
+{
+    pilha->A[pilha->topo++] = reg;
+}
+
+char pop(PILHA *pilhaExcluir)
+{
+    return pilhaExcluir->A[--pilhaExcluir->topo];
 }
 
 bool verificaPilhaVazia(PILHA *pilha)
@@ -41,60 +37,21 @@ bool verificaPilhaVazia(PILHA *pilha)
     return pilha->topo == 0 ? true : false;
 }
 
-bool verificaPilhaCheia(PILHA *pilha)
-{
-    int tamanho = sizeof(pilha->A) / sizeof(int);
-    return pilha->topo < tamanho ? false : true;
-}
-
-void inserirPilha(PILHA *pilha, REGISTRO reg)
-{
-    pilha->A[pilha->topo++] = reg;
-}
-
-void removePilha(PILHA *pilhaExcluir)
-{
-    pilhaExcluir->A[--pilhaExcluir->topo];
-}
-
-void excluirElemntoDaPilha(PILHA *pilhaAExcluir)
-{
-    if (verificaPilhaVazia(&pilha))
-    {
-        limpaConsole();
-        printf(" A pilha está vazia! \n");
-        
-        return;
-    }
-    removePilha(&pilha);
-    limpaConsole();
-    printf("\n Excluido com sucesso! \n");
-    
-}
-
-void exibirPilha(PILHA *p)
-{
-    printf("\n Pilha --> \" ");
-    int i;
-    for (i = 0; i < p->topo; i++)
-    {
-        printf("%i ", p->A[i].chave);
-    }
-    printf("\"\n");
-}
-
-
-
-
-int main()
+ main()
 {
   int n = 0;
-  char frase[50];
+  char frase[MAX];
   printf("\nDigite uma frase: ");
   gets(frase);
-  printf("Frase %s, \n", frase);
-    
-//  inicializaPilha(&pilha);
-
-  return 0;
+  inicializaPilha(&pilha);
+	while(n < MAX){
+		if(frase[n] == NULL) break;
+		push(&pilha, frase[n]);
+		n++;
+	}
+	
+	while(!verificaPilhaVazia(&pilha)){
+		printf("%c ", pop(&pilha));
+	}
+	
 }
