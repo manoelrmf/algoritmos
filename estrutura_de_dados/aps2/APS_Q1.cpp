@@ -27,9 +27,9 @@ void push(PILHA *pilha, char reg)
     pilha->A[pilha->topo++] = reg;
 }
 
-char pop(PILHA *pilhaExcluir)
+char pop(PILHA *pilha)
 {
-    return pilhaExcluir->A[--pilhaExcluir->topo];
+    return pilha[--pilha->topo];
 }
 
 bool verificaPilhaVazia(PILHA *pilha)
