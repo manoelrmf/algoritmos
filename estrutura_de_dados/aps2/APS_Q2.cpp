@@ -4,7 +4,6 @@
 */
 
 #include <stdio.h>
-#include <malloc.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #define MAX 50
@@ -22,9 +21,28 @@ void inicializaPilha(PILHA *pilha)
     pilha->topo = 0;
 }
 
-void push(PILHA *pilha, int reg)
+bool verificaPilhaVazia(PILHA *pilha)
 {
-    pilha->A[pilha->topo++] = reg;
+    return pilha->topo == 0 ? true : false;
+}
+
+
+void exibirPilha(PILHA *p)
+{
+    if (!verificaPilhaVazia(&pilha)) {
+    	printf("\n Pilha --> ");
+    	int i;
+	    for (i = 0; i < p->topo; i++)
+	    {
+	       printf("%i ", p->A[i]);
+	    }
+	};  
+}
+
+void push(PILHA *pilhaPush, int reg)
+{
+    pilhaPush->A[pilhaPush->topo++] = reg;
+    exibirPilha(&pilha);
 }
 
 void pop(PILHA *pilhaPop)
@@ -32,46 +50,71 @@ void pop(PILHA *pilhaPop)
     pilhaPop->A[--pilhaPop->topo];
 }
 
+int returnX(PILHA *pilha){
+ 	int topo = pilha->topo;
+    topo--; topo--; int x = pilha->A[topo];
+}
+
+int returnY(PILHA *pilha){
+	int topo = pilha->topo;
+	topo--; int y = pilha->A[topo];
+}
+
 void add(PILHA *pilhaAdd)
 {
-	int topo = pilhaAdd->topo;
-	topo--; int x = pilhaAdd->A[topo];
-	topo--; int y = pilhaAdd->A[topo];
-	int result = x + y;
-	pop(&pilha);
-  	push(&pilha, result);
+	int soma = returnX(pilhaAdd) + returnY(pilhaAdd);
+	pop(&pilha); pop(&pilha);
+  	push(&pilha, soma);
 }
 
-bool verificaPilhaVazia(PILHA *pilha)
+void sub(PILHA *pilhaSub)
 {
-    return pilha->topo == 0 ? true : false;
+	int subtracao = returnX(pilhaSub) - returnY(pilhaSub);
+	pop(&pilha); pop(&pilha);
+  	push(&pilha, subtracao);
 }
 
-void exibirPilha(PILHA *p)
+void mpy(PILHA *pilhaMpy)
 {
-    printf("\n Pilha --> \" ");
-    int i;
-    for (i = 0; i < p->topo; i++)
-    {
-        printf("%i ", p->A[i]);
-    }
-    printf("\"\n");
+	int multiplicacao = returnX(pilhaMpy) * returnY(pilhaMpy);
+	pop(&pilha); pop(&pilha);
+  	push(&pilha, multiplicacao);
+}
+
+void div(PILHA *pilhaDiv)
+{
+	int divisao = returnX(pilhaDiv) / returnY(pilhaDiv);
+	pop(&pilha); pop(&pilha);
+  	push(&pilha, divisao);
+}
+
+void dec(PILHA *pilhaDec)
+{
+	int decremento = returnY(pilhaDec) - 1;
+	pop(&pilha); pop(&pilha);
+  	push(&pilha, decremento);
 }
 
  main()
 {
+	
   int a = 9;
   int b = 3;
   int c = 2;
   int d = 1;
   int e = 1;
   inicializaPilha(&pilha);
-  push(&pilha, a);
+  
+  push(&pilha, a); 
   push(&pilha, b);
-  push(&pilha, c);
-  push(&pilha, d);
-
-  add(&pilha);
-  exibirPilha(&pilha);
-  	
+  sub(&pilha); 
+  push(&pilha, c); 
+  push(&pilha, d); 
+  push(&pilha, e); 
+  mpy(&pilha); 
+  add(&pilha); 
+  dec(&pilha); 
+  div(&pilha);
+  pop(&pilha);
+  
 }
